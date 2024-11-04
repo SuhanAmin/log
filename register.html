@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" id="submit" value="submit" >Login</button>
+            <br>
+            <a href="login.html">Already have an account?</a>
+        </form>
+    </div>
+    <script type="module">
+        
+               
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+  import { getDatabase, ref, set , get, child } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCWkKCU4rGkMXjH07O2MzyQEzYjMiYR-0Q",
+    authDomain: "simplelogin-d898c.firebaseapp.com",
+    projectId: "simplelogin-d898c",
+    storageBucket: "simplelogin-d898c.firebasestorage.app",
+    messagingSenderId: "334285508029",
+    appId: "1:334285508029:web:da91478dbe1eafba2f16d4",
+    measurementId: "G-JEE3F1CJP8"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db=getDatabase(app);
+  document.getElementById("submit").addEventListener('click', function(e) {
+    e.preventDefault();
+    set(ref(db,'user/' + document.getElementById("username").value),{
+        username:document.getElementById("username").value,
+        password:document.getElementById("password").value});
+        alert("Succesfully Registered");
+       
+               
+        });
+        
+
+  
+  </script>
+  
+  
+    </body>
+    </html>
