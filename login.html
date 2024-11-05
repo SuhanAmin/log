@@ -53,29 +53,59 @@
         <form id="loginForm">
             <input type="text" id="username" placeholder="Username" required>
             <input type="password" id="password" placeholder="Password" required>
-            <button type="submit" onclick="func()">Login</button>
+            <button type="submit" >Login</button>
         </form>
     </div>
 
-    <script>
-        function func(){
-        var user=document.getElementById('username').value;
-        var pass=document.getElementById('password').value;
-        if(user=="suhan" && pass=="123"){
-            alert('succesfully logged in..')
-            document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            // Simulate successful login
-            window.location.href = 'proj.html';
-        });
-        }
-        else{
-            alert('invalid id or password')
-        }
-    }
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyCWkKCU4rGkMXjH07O2MzyQEzYjMiYR-0Q",
+            authDomain: "simplelogin-d898c.firebaseapp.com",
+            projectId: "simplelogin-d898c",
+            storageBucket: "simplelogin-d898c.firebasestorage.app",
+            messagingSenderId: "334285508029",
+            appId: "1:334285508029:web:da91478dbe1eafba2f16d4",
+            measurementId: "G-JEE3F1CJP8"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getDatabase(app);
+    
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-        
+    // Fetch data from Firebase
+    get(ref(db, '/user')).then((snapshot) => {
+        const data = snapshot.val();
+        let isAuthenticated = false;
+
+        // Check each user in the database
+        for (const userId in data) {
+            if (data[userId].username === username && data[userId].password === password) {
+                isAuthenticated = true;
+                break;
+            }
+        }
+
+        if (isAuthenticated) { 
+            alert("logged successfully");
+            window.location.href = 'proj.html';
+        } else {
+            alert("invalid id password");
+        }
+    });
+});
+
     </script>
+    
 
 </body>
 </html>
